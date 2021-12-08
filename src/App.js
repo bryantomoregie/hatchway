@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import { Student } from "./Student";
+import { Search } from "./Search";
+import "./styles/app.css";
 
-function App() {
+const App = () => {
+  let [students, setStudents] = useState([]);
+  let originalStudents;
+  const [name, setName] = useState();
+  const [tag, setTag] = useState();
+
+  useEffect(() => {
+    fetch("https://api.hatchways.io/assessment/students")
+      .then((response) => response.json())
+      .then((data) => setStudents(data.students));
+    originalStudents = students;
+  }, []);
+
+  console.log(originalStudents, students);
+
+  useEffect(() => {
+    setStudents(
+      students.slice().filter((student) => {
+        return student.firstName.includes(name);
+      })
+    );
+  }, [name]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <Search name={name} setName={setName} tag={tag} setTag={setTag} />
+      <div>
+        {students.map((student) => (
+          <Student key={student.id} {...student} />
+        ))}
+      </div>
     </div>
   );
-}
+};
 
 export default App;

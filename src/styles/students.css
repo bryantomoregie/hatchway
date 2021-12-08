@@ -1,0 +1,36 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@1,300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap");
+
+.studentContainer {
+  display: flex;
+  border-bottom: 0.5px solid lightgray;
+  padding: 2rem 1rem;
+  font-family: "Raleway", sans-serif;
+  gap: 3rem;
+}
+
+.avatar {
+  width: 125px;
+  height: 125px;
+  border: 0.5px solid lightgray;
+  border-radius: 50%;
+}
+
+img {
+  object-fit: cover;
+  width: inherit;
+  height: auto;
+  border-radius: 50%;
+}
+
+div.informationContainer > h1 {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+div.informationContainer > p {
+  font-weight: 300;
+  margin-left: 1rem;
+  line-height: 1.5;
+}

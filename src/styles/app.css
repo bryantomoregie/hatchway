@@ -1,0 +1,15 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  background-color: #fff;
+  width: 70%;
+  height: 80vh;
+  margin: 10% auto;
+  overflow: scroll;
+  border-radius: 1%;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
