@@ -21,11 +21,10 @@ export const Student = ({
   pic,
   skill,
 }) => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const handleClick = () => {
     setOpen(!open);
-    console.log(open);
   };
 
   console.log("Ive been hit");
@@ -50,6 +49,7 @@ export const Student = ({
           <li>{`Test 7: \u00A0 \u00A0 ${grades[6]}%`}</li>
           <li>{`Test 8: \u00A0 \u00A0 ${grades[7]}%`}</li>
         </ul>
+        <input value={""} className="addInput" placeholder="Add a tag" />
       </div>
       <FontAwesomeIcon
         onClick={() => handleClick()}

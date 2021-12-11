@@ -50,3 +50,18 @@ ul {
 .icon:hover {
   color: black;
 }
+
+.addInput {
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+}
+
+/* .addInput {
+  border-bottom: solid 1px lightgray !important;
+}
+
+::placeholder {
+  color: gray;
+  opacity: 0.5;
+  font-size: 1.2rem;
+} */
