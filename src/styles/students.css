@@ -6,7 +6,7 @@
   border-bottom: 0.5px solid lightgray;
   padding: 2rem 1rem;
   font-family: "Raleway", sans-serif;
-  gap: 3rem;
+  gap: 10rem;
 }
 
 .avatar {
@@ -29,8 +29,24 @@ div.informationContainer > h1 {
   margin-bottom: 1rem;
 }
 
-div.informationContainer > p {
+div.informationContainer > p,
+ul {
   font-weight: 300;
   margin-left: 1rem;
   line-height: 1.5;
+}
+
+ul {
+  list-style: none;
+  margin-top: 1rem;
+}
+
+.icon {
+  margin-left: auto;
+  color: #bdb8b8;
+  cursor: pointer;
+}
+
+.icon:hover {
+  color: black;
 }
