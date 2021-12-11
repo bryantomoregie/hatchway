@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import "./styles/students.css";
 
 const sumArrayOfString = (arrayOfStrings) => {
@@ -25,7 +25,10 @@ export const Student = ({
 
   const handleClick = () => {
     setOpen(!open);
+    console.log(open);
   };
+
+  console.log("Ive been hit");
   return (
     <div className="studentContainer">
       <div className="avatar">
@@ -37,7 +40,7 @@ export const Student = ({
         <p>{`Company: ${company}`}</p>
         <p>{`Skill: ${skill}`}</p>
         <p>{`Average: ${sumArrayOfString(grades)}%`}</p>
-        <ul style={{ display: open ? "visible" : "none" }}>
+        <ul style={{ display: open ? "block" : "none" }}>
           <li>{`Test 1: \u00A0 \u00A0 ${grades[0]}%`}</li>
           <li>{`Test 2: \u00A0 \u00A0 ${grades[1]}%`}</li>
           <li>{`Test 3: \u00A0 \u00A0 ${grades[2]}%`}</li>
@@ -51,7 +54,7 @@ export const Student = ({
       <FontAwesomeIcon
         onClick={() => handleClick()}
         className="icon"
-        icon={faPlus}
+        icon={open ? faPlus : faMinus}
         size="2x"
       />
     </div>
