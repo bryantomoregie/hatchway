@@ -52,7 +52,12 @@ const App = () => {
       <Search name={name} setName={setName} tag={tag} setTag={setTag} />
       <div>
         {filteredStudents.map((student) => (
-          <Student key={student.id} {...student} />
+          <Student
+            key={student.id}
+            {...student}
+            students={students}
+            setStudents={setStudents}
+          />
         ))}
       </div>
     </div>

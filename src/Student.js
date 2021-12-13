@@ -20,14 +20,26 @@ export const Student = ({
   lastName,
   pic,
   skill,
+  students,
+  setStudents,
 }) => {
   const [open, setOpen] = useState(false);
+  const [tagInput, setTagInput] = useState("");
 
   const handleClick = () => {
     setOpen(!open);
   };
 
-  console.log("Ive been hit");
+  const handleChange = (event) => {
+    setTagInput(event.target.value);
+  };
+
+  const enterKeyPressed = (event) => {
+    if (event.key === "Enter") {
+      console.log(students);
+    }
+  };
+
   return (
     <div className="studentContainer">
       <div className="avatar">
@@ -49,7 +61,13 @@ export const Student = ({
           <li>{`Test 7: \u00A0 \u00A0 ${grades[6]}%`}</li>
           <li>{`Test 8: \u00A0 \u00A0 ${grades[7]}%`}</li>
         </ul>
-        <input value={""} className="addInput" placeholder="Add a tag" />
+        <input
+          value={tagInput}
+          onChange={handleChange}
+          onKeyPress={enterKeyPressed}
+          className="addInput"
+          placeholder="Add a tag"
+        />
       </div>
       <FontAwesomeIcon
         onClick={() => handleClick()}

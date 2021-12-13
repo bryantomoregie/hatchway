@@ -25,3 +25,9 @@ export const Search = ({ setName, setTag, name, tag }) => {
     </div>
   );
 };
+
+/**
+ Maybe from here, we can change every output to lowercase, then send that over to the parent
+ Once ther we can change every first name and last name to lowercase
+ Then search both
+ */
