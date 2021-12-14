@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import "./styles/students.css";
@@ -12,6 +12,7 @@ const sumArrayOfString = (arrayOfStrings) => {
 };
 
 export const Student = ({
+  id,
   city,
   company,
   email,
@@ -22,6 +23,7 @@ export const Student = ({
   skill,
   students,
   setStudents,
+  tags = [],
 }) => {
   const [open, setOpen] = useState(false);
   const [tagInput, setTagInput] = useState("");
@@ -34,9 +36,20 @@ export const Student = ({
     setTagInput(event.target.value);
   };
 
+  const memoizedTags = useMemo(() => [...tags, tagInput], [tagInput, tags]);
+
   const enterKeyPressed = (event) => {
     if (event.key === "Enter") {
-      console.log(students);
+      setStudents(
+        students.map((student) => {
+          if (student.id === id) {
+            return { ...student, tags: memoizedTags };
+          } else {
+            return student;
+          }
+        })
+      );
+      // setStudents(...students);
     }
   };
 
