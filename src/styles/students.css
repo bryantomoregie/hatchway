@@ -54,14 +54,20 @@ ul {
 .addInput {
   font-family: "Open Sans", sans-serif;
   font-size: 16px;
+  max-width: 250px;
+  margin: 0;
 }
 
-/* .addInput {
-  border-bottom: solid 1px lightgray !important;
+.tags {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+  margin-bottom: -8px;
+  margin-left: 1rem;
 }
 
-::placeholder {
-  color: gray;
-  opacity: 0.5;
-  font-size: 1.2rem;
-} */
+.tag {
+  background-color: #e2e0e0;
+  padding: 10px;
+  border-radius: 10%;
+}

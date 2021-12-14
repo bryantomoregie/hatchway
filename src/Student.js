@@ -13,7 +13,6 @@ const sumArrayOfString = (arrayOfStrings) => {
 
 export const Student = ({
   id,
-  city,
   company,
   email,
   firstName,
@@ -49,7 +48,6 @@ export const Student = ({
           }
         })
       );
-      // setStudents(...students);
     }
   };
 
@@ -74,6 +72,14 @@ export const Student = ({
           <li>{`Test 7: \u00A0 \u00A0 ${grades[6]}%`}</li>
           <li>{`Test 8: \u00A0 \u00A0 ${grades[7]}%`}</li>
         </ul>
+        <div className="tags">
+          {tags.map((tag, i) => (
+            <div key={i} className="tag">
+              {tag}
+            </div>
+          ))}
+        </div>
+
         <input
           value={tagInput}
           onChange={handleChange}
