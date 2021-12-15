@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { Student } from "./Student";
 import { Search } from "./Search";
 import "./styles/app.css";
@@ -6,7 +6,7 @@ import "./styles/app.css";
 const App = () => {
   const [students, setStudents] = useState([]);
   const [name, setName] = useState("");
-  const [tag, setTag] = useState();
+  const [tag, setTag] = useState("");
 
   useEffect(() => {
     fetch("https://api.hatchways.io/assessment/students")
@@ -14,38 +14,66 @@ const App = () => {
       .then((data) => setStudents(data.students));
   }, []);
 
-  console.log(students);
+  const filterByName = useCallback(
+    (copyOfStudentArray) => {
+      const lowerCaseName = name.toLowerCase();
 
-  function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
+      const filterWithCaps = copyOfStudentArray.filter((student) => {
+        const lowerCaseFN = student.firstName.toLowerCase();
+        const lowerCaseLN = student.lastName.toLowerCase();
+
+        return (
+          lowerCaseFN.includes(lowerCaseName) ||
+          lowerCaseLN.includes(lowerCaseName)
+        );
+      });
+
+      return filterWithCaps;
+    },
+    [name]
+  );
+
+  const filterByTag = useCallback(
+    (copyOfStudentArray) => {
+      const filterWithCaps = copyOfStudentArray.filter((student) => {
+        if (!student.tags) {
+          return false;
+        }
+
+        let boolean = false;
+        student.tags.forEach((studentTag) => {
+          if (studentTag.includes(tag)) {
+            boolean = true;
+          }
+        });
+
+        return boolean;
+      });
+
+      return filterWithCaps;
+    },
+    [tag]
+  );
 
   const filteredStudents = useMemo(() => {
     let copyOfStudentArray = students;
 
-    if (name === "") {
+    if (name === "" && tag === "") {
       return copyOfStudentArray;
     }
 
-    const capName = capitalizeFirstLetter(name);
+    let uniqueNameFilter = filterByName(copyOfStudentArray);
+    let uniqueTagFilter = filterByTag(copyOfStudentArray);
 
-    const filterWithCaps = copyOfStudentArray.filter((student) => {
-      return student.firstName.includes(capName);
-    });
-
-    const filterWithoutCaps = copyOfStudentArray.filter((student) => {
-      return student.firstName.includes(name);
-    });
-
-    const arrayConcat = filterWithCaps.concat(filterWithoutCaps);
+    let arrayConcat = uniqueNameFilter.concat(uniqueTagFilter);
 
     let uniqueFilter = arrayConcat.filter((c, index) => {
       //come back to this
-      return arrayConcat.indexOf(c) === index;
+      return arrayConcat.indexOf(c) !== index;
     });
 
     return uniqueFilter;
-  }, [students, name]);
+  }, [students, name, tag, filterByName, filterByTag]);
 
   return (
     <div className="container">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./styles/search.css";
 
 export const Search = ({ setName, setTag, name, tag }) => {
@@ -25,9 +25,3 @@ export const Search = ({ setName, setTag, name, tag }) => {
     </div>
   );
 };
-
-/**
- Maybe from here, we can change every output to lowercase, then send that over to the parent
- Once ther we can change every first name and last name to lowercase
- Then search both
- */

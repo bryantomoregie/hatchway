@@ -48,6 +48,7 @@ export const Student = ({
           }
         })
       );
+      setTagInput("");
     }
   };
 
@@ -79,7 +80,6 @@ export const Student = ({
             </div>
           ))}
         </div>
-
         <input
           value={tagInput}
           onChange={handleChange}
