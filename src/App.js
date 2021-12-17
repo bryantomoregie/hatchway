@@ -65,14 +65,15 @@ const App = () => {
     let uniqueNameFilter = filterByName(copyOfStudentArray);
     let uniqueTagFilter = filterByTag(copyOfStudentArray);
 
-    let arrayConcat = uniqueNameFilter.concat(uniqueTagFilter);
+    if (!tag.length) {
+      return uniqueNameFilter;
+    }
 
-    let uniqueFilter = arrayConcat.filter((c, index) => {
-      //come back to this
-      return arrayConcat.indexOf(c) !== index;
-    });
+    const filteredArray = uniqueNameFilter.filter((value) =>
+      uniqueTagFilter.includes(value)
+    );
 
-    return uniqueFilter;
+    return filteredArray;
   }, [students, name, tag, filterByName, filterByTag]);
 
   return (
