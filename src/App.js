@@ -1,12 +1,21 @@
 import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { Student } from "./Student";
 import { Search } from "./Search";
+import Fuse from "fuse.js";
 import "./styles/app.css";
 
 const App = () => {
   const [students, setStudents] = useState([]);
   const [name, setName] = useState("");
   const [tag, setTag] = useState("");
+
+  const fuse = new Fuse(students, {
+    keys: ["firstName", "lastName"],
+  });
+
+  const results = fuse.search("ing");
+
+  console.log(results);
 
   useEffect(() => {
     fetch("https://api.hatchways.io/assessment/students")
