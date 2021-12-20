@@ -16,6 +16,7 @@ const App = () => {
   const fuseTag = new Fuse(students, {
     keys: ["tags"],
     includeScore: true,
+    threshold: 0.01,
   });
 
   useEffect(() => {
@@ -25,18 +26,21 @@ const App = () => {
   }, []);
 
   const filterByName = useCallback(() => {
-    const results = fuseName.search(name);
+    const results = fuseName.search(name).map((student) => student.item);
+    console.log(fuseName.search(name));
     return results;
   }, [name]);
 
   const filterByTag = useCallback(() => {
-    const results = fuseTag.search(tag);
+    const results = fuseTag.search(tag).map((student) => student.item);
+    console.log(fuseTag.search(tag));
+
     return results;
   }, [tag]);
 
   const filteredStudents = useMemo(() => {
     if (name === "" && tag === "") {
-      return null;
+      return students;
     }
 
     let uniqueNameFilter = filterByName();
@@ -45,6 +49,10 @@ const App = () => {
 
     if (!tag.length) {
       return uniqueNameFilter;
+    }
+
+    if (!name.length) {
+      return uniqueTagFilter;
     }
 
     const filteredArray = uniqueNameFilter.filter((value) =>
