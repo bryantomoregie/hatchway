@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { Student } from "./Student";
 import { Search } from "./Search";
+import Fuse from "fuse.js";
 import "./styles/app.css";
 
 const App = () => {
@@ -8,65 +9,48 @@ const App = () => {
   const [name, setName] = useState("");
   const [tag, setTag] = useState("");
 
+  const fuseName = new Fuse(students, {
+    keys: ["firstName", "lastName"],
+  });
+
+  const fuseTag = new Fuse(students, {
+    keys: ["tags"],
+    includeScore: true,
+    threshold: 0.01,
+  });
+
   useEffect(() => {
     fetch("https://api.hatchways.io/assessment/students")
       .then((response) => response.json())
       .then((data) => setStudents(data.students));
   }, []);
 
-  const filterByName = useCallback(
-    (copyOfStudentArray) => {
-      const lowerCaseName = name.toLowerCase();
+  const filterByName = useCallback(() => {
+    const results = fuseName.search(name).map((student) => student.item);
+    return results;
+  }, [name]);
 
-      const filterWithCaps = copyOfStudentArray.filter((student) => {
-        const lowerCaseFN = student.firstName.toLowerCase();
-        const lowerCaseLN = student.lastName.toLowerCase();
+  const filterByTag = useCallback(() => {
+    const results = fuseTag.search(tag).map((student) => student.item);
 
-        return (
-          lowerCaseFN.includes(lowerCaseName) ||
-          lowerCaseLN.includes(lowerCaseName)
-        );
-      });
-
-      return filterWithCaps;
-    },
-    [name]
-  );
-
-  const filterByTag = useCallback(
-    (copyOfStudentArray) => {
-      const filterWithCaps = copyOfStudentArray.filter((student) => {
-        if (!student.tags) {
-          return false;
-        }
-
-        let boolean = false;
-        student.tags.forEach((studentTag) => {
-          if (studentTag.includes(tag)) {
-            boolean = true;
-          }
-        });
-
-        return boolean;
-      });
-
-      return filterWithCaps;
-    },
-    [tag]
-  );
+    return results;
+  }, [tag]);
 
   const filteredStudents = useMemo(() => {
-    let copyOfStudentArray = students;
-
     if (name === "" && tag === "") {
-      return copyOfStudentArray;
+      return students;
     }
 
-    let uniqueNameFilter = filterByName(copyOfStudentArray);
-    let uniqueTagFilter = filterByTag(copyOfStudentArray);
+    let uniqueNameFilter = filterByName();
+
+    let uniqueTagFilter = filterByTag();
 
     if (!tag.length) {
       return uniqueNameFilter;
+    }
+
+    if (!name.length) {
+      return uniqueTagFilter;
     }
 
     const filteredArray = uniqueNameFilter.filter((value) =>
