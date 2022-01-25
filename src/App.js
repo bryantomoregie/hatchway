@@ -27,13 +27,11 @@ const App = () => {
 
   const filterByName = useCallback(() => {
     const results = fuseName.search(name).map((student) => student.item);
-    console.log(fuseName.search(name));
     return results;
   }, [name]);
 
   const filterByTag = useCallback(() => {
     const results = fuseTag.search(tag).map((student) => student.item);
-    console.log(fuseTag.search(tag));
 
     return results;
   }, [tag]);
